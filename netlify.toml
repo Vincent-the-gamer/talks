@@ -1,13 +1,23 @@
 [build]
 publish = "dist"
-command = "npm run build"
+command = "pnpm run build"
 
 [build.environment]
-NODE_VERSION = "24"
+NODE_VERSION = "20"
 
 [[redirects]]
 from = "/.well-known/*"
 to = "/.well-known/:splat"
+status = 200
+
+[[redirects]]
+from = "/2026-10-08"
+to = "/2026/vincents-agent-use/"
+status = 301
+
+[[redirects]]
+from = "/2026/vincents-agent-use/*"
+to = "/2026/vincents-agent-use/index.html"
 status = 200
 
 [[redirects]]

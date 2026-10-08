@@ -6,6 +6,17 @@ Each talk lives in its own date-prefixed folder (e.g. `2026-10-08/`), with the
 deck under `<talk folder>/src/slides.md` and the speaker script under
 `<talk folder>/content.md`.
 
+Every talk is served as its own sub-route, built from the year of its folder
+plus the `name` in `<talk folder>/src/package.json`:
+
+```
+/2026/vincents-agent-use/        → 2026-10-08 (package name `vincents-agent-use`)
+/2026/vincents-agent-use/3       → slide 3
+```
+
+This way multiple talks can be built into the same site and browsed side by
+side, sharing a single origin.
+
 ## Catalogue
 
 ###### 2026-10-08
@@ -31,7 +42,8 @@ Then start the dev server:
 pnpm dev
 ```
 
-You'll be prompted to pick a talk. Once it's up, visit <http://localhost:3030>.
+You'll be prompted to pick a talk. The dev server auto-opens the talk's sub-route,
+e.g. <http://localhost:3030/2026/vincents-agent-use/>.
 
 Pass `-y` to skip the prompt and open the most recent talk:
 
@@ -45,16 +57,17 @@ Learn more about Slidev at the [documentation](https://sli.dev/).
 
 ### Build
 
-To build the slide website of a talk, run
+To build every talk into the shared `dist/` (one folder per sub-route, plus an
+index page listing them all), run
 
 ```bash
 pnpm build
 ```
 
-To build every talk at once, run
+To build a single talk, run
 
 ```bash
-pnpm build:all
+pnpm build:talk
 ```
 
 ### Export to PDF
@@ -79,8 +92,17 @@ pnpm typecheck
 1. Create a folder named `YYYY-MM-DD` (e.g. `2026-11-01`).
 2. Copy the `src/` folder from an existing talk — it contains the Slidev deck,
    `package.json`, and styles.
-3. Write your slides in `<your talk folder>/src/slides.md`.
-4. Add the talk to the [Catalogue](#catalogue) above.
+3. Set the `name` in `<your talk folder>/src/package.json` — it becomes the
+   sub-route slug (e.g. `name: "vincent-agent-use"` → `/2026/vincent-agent-use/`).
+4. Write your slides in `<your talk folder>/src/slides.md`.
+5. Add the talk to the [Catalogue](#catalogue) above.
+6. Regenerate the hosting redirects so deep links (like `/2026/my-talk/3`) work:
+
+   ```bash
+   pnpm redirects
+   ```
+
+   Commit the updated `netlify.toml` — the host reads it before building.
 
 The `pnpm dev`, `pnpm build` and `pnpm export` scripts auto-discover every
 `YYYY-MM-DD` folder, so no other registration is needed.

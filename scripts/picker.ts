@@ -1,8 +1,8 @@
-import fs from 'node:fs/promises'
 import process from 'node:process'
 import { setTimeout as delay } from 'node:timers/promises'
-import prompts from 'prompts'
 import { execa, type ResultPromise } from 'execa'
+import prompts from 'prompts'
+import { discoverTalks } from './talks'
 
 /** URL the Slidev dev server is served on by default. */
 const DEV_URL = 'http://localhost:3030'
@@ -44,20 +44,19 @@ async function waitForServer(url: string, child: ResultPromise, timeout = 30_000
 }
 
 async function startPicker(args: string[]) {
-  const folders = (await fs.readdir(new URL('..', import.meta.url), { withFileTypes: true }))
-    .filter(dirent => dirent.isDirectory())
-    .map(dirent => dirent.name)
-    .filter(folder => folder.match(/^\d{4}-/))
-    .sort((a, b) => -a.localeCompare(b))
+  const talks = await discoverTalks()
 
   const result = args.includes('-y')
-    ? { folder: folders[0] }
+    ? { folder: talks[0]?.folder }
     : await prompts([
       {
         type: 'select',
         name: 'folder',
-        message: 'Pick a folder',
-        choices: folders.map(folder => ({ title: folder, value: folder })),
+        message: 'Pick a talk',
+        choices: talks.map(talk => ({
+          title: talk.title ? `${talk.folder} | ${talk.title}` : talk.folder,
+          value: talk.folder,
+        })),
       },
     ])
 
@@ -66,13 +65,18 @@ async function startPicker(args: string[]) {
   if (!result.folder)
     return
 
-  const cwd = new URL(`../${result.folder}/src`, import.meta.url)
+  const talk = talks.find(item => item.folder === result.folder)
+  if (!talk)
+    return
+
+  const cwd = new URL(`../${talk.folder}/src`, import.meta.url)
 
   if (args[0] === 'dev') {
-    const dev = execa('pnpm', ['run', ...args], { cwd, stdio: 'inherit' })
-    if (await waitForServer(DEV_URL, dev)) {
-      console.log(`Opening ${DEV_URL} in the browser`)
-      await openBrowser(DEV_URL)
+    const url = `${DEV_URL}${talk.base}`
+    const dev = execa('pnpm', ['run', 'dev', '--base', talk.base], { cwd, stdio: 'inherit' })
+    if (await waitForServer(url, dev)) {
+      console.log(`Opening ${url} in the browser`)
+      await openBrowser(url)
     }
     await dev
     return

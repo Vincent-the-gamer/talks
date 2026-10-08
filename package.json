@@ -4,14 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "pnpm run picker dev",
-    "build": "rimraf dist && pnpm run picker build",
-    "build:all": "rimraf dist && pnpm -r run build",
+    "build": "rimraf dist && pnpm -r run build && tsx scripts/home.ts",
+    "build:talk": "pnpm run picker build",
     "export": "pnpm run picker export",
+    "redirects": "tsx scripts/redirects.ts",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint .",
     "picker": "tsx scripts/picker.ts",
     "prepare": "git submodule update --init --recursive",
-    "dep": "taze major -I -r"
+    "dep": "taze major -I -r",
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^9.5.1",

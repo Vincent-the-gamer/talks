@@ -1,10 +1,11 @@
 {
+  "name": "vincents-agent-use",
   "type": "module",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "slidev",
-    "build": "slidev build --out ../dist",
+    "build": "tsx ../../scripts/build.ts",
     "export": "slidev export --per-slide --dark --output ../slides.pdf"
   },
   "dependencies": {

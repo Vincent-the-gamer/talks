@@ -14,6 +14,7 @@ info: |
 
   用免费的 Agent 方案，把日常的重复劳动交出去。
 transition: slide-left
+routerMode: history
 mdc: true
 drawings:
   persist: false
