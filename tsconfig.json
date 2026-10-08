@@ -6,6 +6,10 @@
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "markdown-it": ["./node_modules/.pnpm/node_modules/markdown-exit"],
+    },
   },
   "exclude": ["**/*.md"],
 }

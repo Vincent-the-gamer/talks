@@ -3,7 +3,12 @@ packages:
 allowBuilds:
   esbuild: true
   playwright-chromium: true
+  pnpm: true
   unrs-resolver: true
   vue-demi: true
 minimumReleaseAgeExclude:
   - execa@10.1.0
+  - "@iconify/json@2.2.540"
+  - playwright-chromium@1.64.0
+  - playwright-core@1.64.0
+  - vue-router@5.4.0
