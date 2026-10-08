@@ -1,0 +1,9 @@
+packages:
+  - "*/src"
+allowBuilds:
+  esbuild: true
+  playwright-chromium: true
+  unrs-resolver: true
+  vue-demi: true
+minimumReleaseAgeExclude:
+  - execa@10.1.0
