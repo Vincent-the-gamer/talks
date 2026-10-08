@@ -13,10 +13,10 @@ export default defineConfig({
   },
   slidev: {
     markdown: {
-      markdownItSetup(md) {
+      markdownSetup(md) {
         md.use(MarkdownItMagicLink, {
           linksMap: {
-            'OpenCode': { link: 'https://opencode.ai' },
+            'OpenCode': 'https://opencode.ai',
           },
         })
       },
