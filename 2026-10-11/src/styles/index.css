@@ -1,7 +1,3 @@
-/* .slidev-code {
-  font-size: 1em !important;
-  line-height: 1.4em !important;
-} */
 :root {
     --slidev-code-padding: 8px 10px;
     --slidev-code-background: #16161690 !important;
@@ -54,11 +50,20 @@ h6 {
     transition: opacity 200ms ease;
 }
 
+.slidev-code {
+    backdrop-filter: blur(10px);
+    border: 1px solid #eee1;
+}
+
 iframe {
     background: black;
 }
 
-.list-move, /* apply transition to moving elements */
+.rough-annotation > path[stroke-width="2"] {
+    stroke-width: calc(2px * var(--slidev-slide-scale));
+}
+
+.list-move,
 .list-enter-active,
 .list-leave-active {
     transition: all 0.5s ease;
@@ -70,78 +75,8 @@ iframe {
     transform: translateY(30px);
 }
 
-/* ensure leaving items are taken out of layout flow so that moving
-   animations can be calculated correctly. */
 .list-leave-active {
     position: absolute;
-}
-
-/* ---- */
-
-@keyframes balance-shake {
-    0% {
-        transform: rotate(13deg);
-    }
-    50% {
-        transform: rotate(20deg);
-    }
-    100% {
-        transform: rotate(13deg);
-    }
-}
-
-@keyframes balance-move-left {
-    0% {
-        transform: translate(0, -27px);
-    }
-    50% {
-        transform: translate(3px, -40px);
-    }
-    100% {
-        transform: translate(0, -27px);
-    }
-}
-
-@keyframes balance-move-right {
-    0% {
-        transform: translate(-7px, 25px);
-    }
-    50% {
-        transform: translate(-12px, 38px);
-    }
-    100% {
-        transform: translate(-7px, 25px);
-    }
-}
-
-.animate-balance-shake {
-    transform: rotate(13deg);
-    animation: balance-shake 3s infinite;
-    animation-delay: 1s;
-    animation-timing-function: ease;
-}
-
-.animate-balance-move-left {
-    transform: translate(0, -27px);
-    animation: balance-move-left 3s infinite;
-    animation-delay: 1s;
-    animation-timing-function: ease;
-}
-
-.animate-balance-move-right {
-    transform: translate(-7px, 25px);
-    animation: balance-move-right 3s infinite;
-    animation-delay: 1s;
-    animation-timing-function: ease;
-}
-
-.slidev-code {
-    backdrop-filter: blur(10px);
-    border: 1px solid #eee1;
-}
-
-.rough-annotation > path[stroke-width="2"] {
-    stroke-width: calc(2px * var(--slidev-slide-scale));
 }
 
 /* Magic Links */
@@ -180,16 +115,15 @@ iframe {
     border-radius: 50%;
 }
 
+/* Footnotes */
 .footnotes-sep {
     display: none;
 }
 
-/* 脚注 */
 .footnotes > .footnotes-list {
     margin-top: 12px;
     opacity: 0.9;
     font-size: 12px;
-    /* 确保脚注上的返回链接符号 ↩ 不会被 body 的 Emoji 字体覆盖渲染为 ↩️ */
     font-family: sans-serif;
 }
 
@@ -197,65 +131,42 @@ iframe {
     margin: 0;
 }
 
-.architecture {
-    --un-border-opacity: 0.7;
-    --color-sfc: rgb(74 222 128 / var(--un-border-opacity));
-    --color-jsx: rgb(96 165 250 / var(--un-border-opacity));
+/* ---- Deck helpers ---- */
 
-    --text-secondary: rgb(163 163 163);
-}
-.architecture p {
-    padding: 0;
-    margin: 0;
-    line-height: 1.3;
-}
-
-/* ---- Plain-language explainer (for non-technical audience) ---- */
-
-.plain-card {
-    padding: 0.85rem 1.1rem;
-    border-radius: 0.9rem;
-    background: rgba(34, 197, 94, 0.1);
-    border: 1px solid rgba(34, 197, 94, 0.32);
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
-
-.plain-card .plain-tag {
-    display: inline-block;
-    margin-right: 0.4rem;
-    font-weight: 600;
-    opacity: 0.9;
-}
-
-/* ---- Case study helpers ---- */
-
-.case-card {
-    padding: 0.9rem 1.1rem;
+/* A soft glass card, used for panels and callouts. */
+.glass {
+    padding: 1rem 1.15rem;
     border-radius: 0.9rem;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.case-tag {
+/* Green accent, for the single most important takeaway on a slide. */
+.glass.key {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.32);
+}
+
+/* Small uppercase eyebrow label. */
+.pill {
     display: inline-block;
-    padding: 0.12rem 0.6rem;
+    padding: 0.14rem 0.62rem;
     border-radius: 999px;
     font-size: 0.7rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     background: rgba(56, 189, 248, 0.16);
     border: 1px solid rgba(56, 189, 248, 0.35);
-    opacity: 0.92;
 }
 
+/* Chat mockup, for showing what a real session looks like. */
 .chat {
     display: flex;
     flex-direction: column;
     gap: 0.55rem;
 }
 
-.chat .msg {
+.bubble {
     align-self: flex-start;
     max-width: 82%;
     padding: 0.5rem 0.85rem;
@@ -266,7 +177,7 @@ iframe {
     line-height: 1.5;
 }
 
-.chat .msg.right {
+.bubble.me {
     align-self: flex-end;
     background: linear-gradient(
         135deg,
@@ -276,7 +187,7 @@ iframe {
     border-color: rgba(255, 255, 255, 0.18);
 }
 
-.chat .who {
+.bubble .who {
     display: block;
     margin-bottom: 0.12rem;
     font-size: 0.7rem;
@@ -284,25 +195,9 @@ iframe {
     opacity: 0.5;
 }
 
-.chat code {
+.bubble code {
     padding: 0.05rem 0.3rem;
     border-radius: 0.3rem;
     background: rgba(0, 0, 0, 0.35);
     font-size: 0.82em;
-}
-
-.step-card {
-    padding: 1rem 1.1rem;
-    border-radius: 0.9rem;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-}
-.step-card h3 {
-    margin: 0 0 0.35rem;
-}
-.step-card p {
-    margin: 0.1rem 0;
-    font-size: 0.92rem;
-    line-height: 1.55;
-    opacity: 0.75;
 }

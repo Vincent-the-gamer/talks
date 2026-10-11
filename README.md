@@ -2,7 +2,7 @@
 
 Slides & code for my talks, using [Slidev](https://github.com/slidevjs/slidev)!
 
-Each talk lives in its own date-prefixed folder (e.g. `2026-10-08/`), with the
+Each talk lives in its own date-prefixed folder (e.g. `2026-10-11/`), with the
 deck under `<talk folder>/src/slides.md` and the speaker script under
 `<talk folder>/content.md`.
 
@@ -10,8 +10,8 @@ Every talk is served as its own sub-route, built from the year of its folder
 plus the `name` in `<talk folder>/src/package.json`:
 
 ```
-/2026/vincents-agent-use/        → 2026-10-08 (package name `vincents-agent-use`)
-/2026/vincents-agent-use/3       → slide 3
+/2026/arm-your-agent/            → 2026-10-11 (package name `arm-your-agent`)
+/2026/arm-your-agent/3           → slide 3
 ```
 
 This way multiple talks can be built into the same site and browsed side by
@@ -19,9 +19,9 @@ side, sharing a single origin.
 
 ## Catalogue
 
-###### 2026-10-08
+###### 2026-10-11
 
- - `zh` [又懒又穷的我，使用 Agent 的过程](./2026-10-08) - 诡锋的第一期杂谈
+ - `zh` [武装你的 Agent](./2026-10-11) - 诡锋的第一期杂谈
 
 ## Requirements
 
@@ -43,7 +43,7 @@ pnpm dev
 ```
 
 You'll be prompted to pick a talk. The dev server auto-opens the talk's sub-route,
-e.g. <http://localhost:3030/2026/vincents-agent-use/>.
+e.g. <http://localhost:3030/2026/arm-your-agent/>.
 
 Pass `-y` to skip the prompt and open the most recent talk:
 

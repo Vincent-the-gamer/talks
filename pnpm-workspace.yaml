@@ -2,7 +2,7 @@ packages:
   - "*/src"
 allowBuilds:
   esbuild: true
-  playwright-chromium: true
+  playwright-chromium: false
   pnpm: true
   unrs-resolver: true
   vue-demi: true
